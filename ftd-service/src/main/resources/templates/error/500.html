@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/errors.css}" />
+</head>
+
+<body>
+    <div class="error-page">
+        <div>
+            <h1 data-h1="500">500</h1>
+            <p data-p="SERVER ERROR">SERVER ERROR</p>
+        </div>
+    </div>
+
+    <a th:href="@{/index.html}" class="back">GO BACK</a>
+    <script type="text/javascript" th:src="@{/js/errors.js}"></script>
+</body>
+
+</html>

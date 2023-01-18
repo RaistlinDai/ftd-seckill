@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ftd.seckill.ftdservice.mapper.PermissionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ftd.seckill.ftdservice.entity.Permission">
+        <id column="permission_id" property="permissionId" />
+        <result column="permission_name" property="permissionName" />
+        <result column="permission_type" property="permissionType" />
+        <result column="permission_status" property="permissionStatus" />
+        <result column="permission_value" property="permissionValue" />
+        <result column="permission_path" property="permissionPath" />
+        <result column="permission_comp" property="permissionComp" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        permission_id, permission_name, permission_type, permission_status, permission_value, permission_path, permission_comp
+    </sql>
+
+    <select id="getPermissionByName" parameterType="String" resultMap="BaseResultMap">
+        select * from ftd_schema.permission where permission_name = #{permissionName};
+    </select>
+
+    <select id="getPermissionValuesByUserId" parameterType="String" resultType="String">
+        select p.permission_value
+        from ftd_schema.roleuser ru
+        inner join ftd_schema.rolepermission rp on ru.role_id = rp.role_id
+        inner join ftd_schema.permission p on p.permission_id = rp.permission_id
+        where ru.user_id = #{userId}
+    </select>
+
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ftd.seckill.ftdservice.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ftd.seckill.ftdservice.entity.User">
+        <id column="user_id" property="userId" />
+        <result column="user_code" property="userCode" />
+        <result column="user_email" property="userEmail" />
+        <result column="user_name" property="userName" />
+        <result column="user_password" property="userPassword" />
+        <result column="role_id" property="roleId" />
+        <result column="register_date" property="registerDate" />
+        <result column="last_login_date" property="lastLoginDate" />
+        <result column="login_count" property="loginCount" />
+        <result column="user_mobile" property="userMobile" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id, user_code, user_email, user_name, user_password, role_id, register_date, last_login_date, login_count, user_mobile
+    </sql>
+    
+    <select id="selectUserByEmail" resultMap="BaseResultMap">
+        select * from ftd_schema.user where
+        user_email = #{userEmail}
+    </select>
+
+    <select id="selectUserByMobile" resultMap="BaseResultMap">
+        select * from ftd_schema.user where
+        user_mobile = #{mobile}
+    </select>
+
+    <select id="selectUserByCode" resultMap="BaseResultMap">
+        select * from ftd_schema.user where
+        user_code = #{userCode}
+    </select>
+
+</mapper>
