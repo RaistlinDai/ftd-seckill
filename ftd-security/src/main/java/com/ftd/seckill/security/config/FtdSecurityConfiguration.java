@@ -33,7 +33,7 @@ public class FtdSecurityConfiguration {
      */
     @Bean
     public FtdPasswordEncoder ftdPasswordEncoder(){
-        log.info("===========> FtdSecurityConfiguration.FtdPasswordEncoder invoked.");
+        log.info("FtdSecurityConfiguration.FtdPasswordEncoder invoked.");
         return new FtdPasswordEncoder();
     }
 
@@ -43,7 +43,7 @@ public class FtdSecurityConfiguration {
      */
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
-        log.info("===========> FtdSecurityConfiguration.PersistentTokenRepository invoked.");
+        log.info("FtdSecurityConfiguration.PersistentTokenRepository invoked.");
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
         jdbcTokenRepository.setDataSource(dataSource);
         // 自动创建token表
@@ -59,7 +59,7 @@ public class FtdSecurityConfiguration {
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        log.info("===========> FtdSecurityConfiguration.SecurityFilterChain invoked.");
+        log.info("FtdSecurityConfiguration.SecurityFilterChain invoked.");
         return http
                 // 添加自定义Filter
                 .addFilterBefore(new FtdUsernamePasswordValidationFilter(), UsernamePasswordAuthenticationFilter.class)
