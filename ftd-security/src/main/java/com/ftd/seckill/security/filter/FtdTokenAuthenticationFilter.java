@@ -24,8 +24,7 @@ import java.util.List;
 public class FtdTokenAuthenticationFilter extends BasicAuthenticationFilter {
     private RedisTemplate redisTemplate;
 
-    public FtdTokenAuthenticationFilter(AuthenticationManager authenticationManager,
-                                        TokenUtil tokenUtil, RedisTemplate redisTemplate){
+    public FtdTokenAuthenticationFilter(AuthenticationManager authenticationManager, RedisTemplate redisTemplate){
         super(authenticationManager);
         this.redisTemplate = redisTemplate;
     }
@@ -33,7 +32,7 @@ public class FtdTokenAuthenticationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        log.info("TokenAuthenticationFilter.doFilterInternal Invoked.");
+        log.info("FtdTokenAuthenticationFilter.doFilterInternal Invoked.");
         // 获取当前认证成功的用户权限信息
         UsernamePasswordAuthenticationToken authRequest = getAuthentication(request);
         // 判断如果有权限信息，则放入Context

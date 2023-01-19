@@ -1,5 +1,6 @@
 package com.ftd.seckill.security.config;
 
+import com.ftd.seckill.security.filter.FtdTokenAuthenticationFilter;
 import com.ftd.seckill.security.filter.FtdUsernamePasswordValidationFilter;
 import com.ftd.seckill.security.handler.FtdPasswordEncoder;
 import com.ftd.seckill.security.handler.LoginFailureHandler;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -64,9 +66,12 @@ public class FtdSecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         log.info("FtdSecurityConfiguration.SecurityFilterChain invoked.");
+        AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
         return http
-                // 添加自定义Filter
+                // 添加自定义Filter: 用户名密码格式验证过滤器
                 .addFilterBefore(new FtdUsernamePasswordValidationFilter(), UsernamePasswordAuthenticationFilter.class)
+                // 添加自定义Filter: Token验证过滤器
+//                .addFilterAfter(new FtdTokenAuthenticationFilter(authenticationManager, redisTemplate), UsernamePasswordAuthenticationFilter.class)
                 // 访问权限设置
                 .authorizeRequests(auth -> {
                     auth.antMatchers("/login/**").permitAll();
