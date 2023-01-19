@@ -1,6 +1,7 @@
 package com.ftd.seckill.security.config;
 
 import com.ftd.seckill.security.filter.FtdUsernamePasswordValidationFilter;
+import com.ftd.seckill.security.handler.FtdPasswordEncoder;
 import com.ftd.seckill.security.handler.LoginFailureHandler;
 import com.ftd.seckill.security.handler.LoginSuccessHandler;
 import com.ftd.seckill.security.handler.UnauthEntryPoint;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,6 +28,8 @@ public class FtdSecurityConfiguration {
     private UserDetailsService userDetailsService;
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 加载密码编码器
@@ -74,7 +78,7 @@ public class FtdSecurityConfiguration {
                     login.loginPage("/login/toLogin");
                     login.usernameParameter("userEmail");
                     login.loginProcessingUrl("/login/doLogin");
-                    login.successHandler(new LoginSuccessHandler());
+                    login.successHandler(new LoginSuccessHandler(redisTemplate));
                     login.failureUrl("/login/toLogin");
                     login.failureHandler(new LoginFailureHandler());
 //                    login.defaultSuccessUrl("/index.html");

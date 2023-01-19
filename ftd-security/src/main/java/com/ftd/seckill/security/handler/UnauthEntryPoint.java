@@ -15,6 +15,6 @@ import java.io.IOException;
 public class UnauthEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        ResponseErrorHandler.formatServletResponse(response, ResponseBeanEnum.ERROR);
+        FtdSecurityResponseHandler.formatServletResponse(response, ResponseBeanEnum.ERROR);
     }
 }

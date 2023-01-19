@@ -1,4 +1,4 @@
-package com.ftd.seckill.security.config;
+package com.ftd.seckill.security.handler;
 
 import com.ftd.seckill.base.utils.MD5Util;
 import lombok.extern.slf4j.Slf4j;

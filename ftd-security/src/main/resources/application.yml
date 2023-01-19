@@ -1,0 +1,21 @@
+spring:
+  # Redis 数据源设置
+  redis:
+    #服务器地址
+    host: 127.0.0.1
+    #端口
+    port: 6379
+    #默认数据库
+    database: 10
+    #超时时间
+    timeout: 10000
+    lettuce:
+      pool:
+        #最大连接数
+        max-active: 8
+        #最大链接阻塞等待时间
+        max-wait: 10000ms
+        #最大空闲时间
+        max-idle: 9
+        #最小空闲时间
+        min-idle: 5

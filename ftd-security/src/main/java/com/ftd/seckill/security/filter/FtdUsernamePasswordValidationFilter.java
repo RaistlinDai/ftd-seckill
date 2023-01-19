@@ -2,7 +2,7 @@ package com.ftd.seckill.security.filter;
 
 import com.ftd.seckill.base.utils.EmailValidatorUtil;
 import com.ftd.seckill.base.vo.ResponseBeanEnum;
-import com.ftd.seckill.security.handler.ResponseErrorHandler;
+import com.ftd.seckill.security.handler.FtdSecurityResponseHandler;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -39,7 +39,7 @@ public class FtdUsernamePasswordValidationFilter extends GenericFilterBean {
 
         // 验证登录邮箱格式
         if (!EmailValidatorUtil.isValid(username))
-            ResponseErrorHandler.formatServletResponse(response, ResponseBeanEnum.LOGIN_EMAIL_ERROR);
+            FtdSecurityResponseHandler.formatServletResponse(response, ResponseBeanEnum.LOGIN_EMAIL_ERROR);
         else
             chain.doFilter(request, response);
     }

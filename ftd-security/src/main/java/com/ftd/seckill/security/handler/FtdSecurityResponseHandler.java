@@ -11,14 +11,17 @@ import java.io.IOException;
 /**
  * HttpServletResponse错误信息处理器
  */
-public class ResponseErrorHandler {
+public class FtdSecurityResponseHandler {
     public static void formatServletResponse (HttpServletResponse response, ResponseBeanEnum responseBeanEnum){
         response.setStatus(HttpStatus.OK.value());
         response.setContentType("application/json;charset=utf-8");
         response.setCharacterEncoding("UTF-8");
         ObjectMapper mapper = new ObjectMapper();
         try {
-            mapper.writeValue(response.getWriter(), ResponseBean.error(responseBeanEnum));
+            if (responseBeanEnum == null)
+                mapper.writeValue(response.getWriter(), ResponseBean.success());
+            else
+                mapper.writeValue(response.getWriter(), ResponseBean.error(responseBeanEnum));
         }
         catch (IOException e){
             e.printStackTrace();
