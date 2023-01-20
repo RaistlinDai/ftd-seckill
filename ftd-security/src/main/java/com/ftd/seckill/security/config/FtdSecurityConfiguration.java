@@ -81,18 +81,18 @@ public class FtdSecurityConfiguration {
                     login.loginPage("/login/toLogin");
                     login.usernameParameter("userEmail");
                     login.loginProcessingUrl("/login/doLogin");
-                    login.successHandler(new LoginSuccessHandler(redisTemplate));
                     login.failureUrl("/login/toLogin");
+//                    login.defaultSuccessUrl("/");
+                    login.successHandler(new LoginSuccessHandler(redisTemplate));
                     login.failureHandler(new LoginFailureHandler());
-                    login.defaultSuccessUrl("/");
                 })
                 // 开启logout
                 .logout(logout -> {
                     logout.logoutUrl("/login/logout");
+                    logout.deleteCookies("JSESSIONID", "user_ticket");
+//                    logout.logoutSuccessUrl("/");
+                    // handler必须放在deleteCookies后面，否则失效
                     logout.addLogoutHandler(new FtdLogoutHandler(redisTemplate));
-                    logout.deleteCookies("JSESSIONID");
-                    logout.deleteCookies("user_ticket");
-                    logout.logoutSuccessUrl("/");
                 })
                 // 开启Remember me
                 .rememberMe(remember ->{
