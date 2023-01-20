@@ -1,6 +1,7 @@
 package com.ftd.seckill.security.handler;
 
 import com.ftd.seckill.base.vo.ResponseBeanEnum;
+import com.ftd.seckill.security.utils.FtdSecurityResponseUtil;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
@@ -15,6 +16,6 @@ import java.io.IOException;
 public class LoginFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        FtdSecurityResponseHandler.formatServletResponse(response, ResponseBeanEnum.LOGIN_INVALID_ERROR);
+        FtdSecurityResponseUtil.formatServletResponse(response, ResponseBeanEnum.LOGIN_INVALID_ERROR);
     }
 }

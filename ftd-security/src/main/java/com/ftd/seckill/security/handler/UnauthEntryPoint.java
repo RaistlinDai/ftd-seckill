@@ -1,6 +1,7 @@
 package com.ftd.seckill.security.handler;
 
 import com.ftd.seckill.base.vo.ResponseBeanEnum;
+import com.ftd.seckill.security.utils.FtdSecurityResponseUtil;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
@@ -15,6 +16,6 @@ import java.io.IOException;
 public class UnauthEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        FtdSecurityResponseHandler.formatServletResponse(response, ResponseBeanEnum.ERROR);
+        FtdSecurityResponseUtil.formatServletResponse(response, ResponseBeanEnum.ERROR);
     }
 }

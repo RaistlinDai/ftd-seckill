@@ -1,5 +1,6 @@
 package com.ftd.seckill.security.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -39,6 +40,7 @@ public class SecurityUserDetails implements UserDetails {
     }
 
     @Override
+    @JsonIgnoreProperties
     public String getPassword() {
         if (currentUserInfo != null)
             return currentUserInfo.getUserPassword();
@@ -47,6 +49,7 @@ public class SecurityUserDetails implements UserDetails {
     }
 
     @Override
+    @JsonIgnoreProperties
     public String getUsername() {
         if (currentUserInfo != null)
             return currentUserInfo.getUserName();

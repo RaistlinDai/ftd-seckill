@@ -1,6 +1,7 @@
 package com.ftd.seckill.base.utils;
 
 import io.jsonwebtoken.CompressionCodecs;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -12,8 +13,8 @@ import java.util.Date;
 
 public class TokenUtil {
 
-    // token 有效时长：2分钟
-    public static final long TOKEN_EXPIRATION = 2*60*1000;
+    // token 有效时长：4小时
+    public static final long TOKEN_EXPIRATION = 4*60*60*1000;
     // 编码密钥
     private static final String JWT_SIGN_KEY = "raistlindc_jwt_token_json_sign_key";
     private static String BASE64_SECURITY = Base64.getEncoder().encodeToString(JWT_SIGN_KEY.getBytes(StandardCharsets.UTF_8));
@@ -40,7 +41,14 @@ public class TokenUtil {
      * @return
      */
     public static String getUserInfoFromToken(String token) {
-        return Jwts.parser().setSigningKey(Base64.getDecoder().decode(BASE64_SECURITY))
-                .parseClaimsJws(token).getBody().getSubject();
+        String userInfo = null;
+
+        try {
+            userInfo = Jwts.parser().setSigningKey(Base64.getDecoder().decode(BASE64_SECURITY))
+                    .parseClaimsJws(token).getBody().getSubject();
+        } catch (ExpiredJwtException ee) {
+            return null;
+        }
+        return userInfo;
     }
 }

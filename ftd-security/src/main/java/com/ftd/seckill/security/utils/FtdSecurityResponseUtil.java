@@ -1,4 +1,4 @@
-package com.ftd.seckill.security.handler;
+package com.ftd.seckill.security.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ftd.seckill.base.vo.ResponseBean;
@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * HttpServletResponse错误信息处理器
  */
-public class FtdSecurityResponseHandler {
+public class FtdSecurityResponseUtil {
     public static void formatServletResponse (HttpServletResponse response, ResponseBeanEnum responseBeanEnum){
         response.setStatus(HttpStatus.OK.value());
         response.setContentType("application/json;charset=utf-8");

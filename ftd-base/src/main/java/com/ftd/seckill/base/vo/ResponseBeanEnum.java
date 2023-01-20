@@ -15,7 +15,7 @@ public enum ResponseBeanEnum {
     // Login Validations
     LOGIN_INVALID_ERROR(500210, "Invalid user email or password"),
     LOGIN_EMAIL_ERROR(500211, "Incorrect user email format"),
-    LOGIN_NOT_EXIST_ERROR(500212, "User does not exist"),
+    LOGIN_EXPIRED_TOKEN_ERROR(500212, "Expired token, please login"),
     LOGIN_PASSWORD_ERROR(500213, "Incorrect password"),
     // Binding Exception
     BINDING_ERROR(500500, "Parameter exception");

@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -66,12 +67,11 @@ public class FtdSecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         log.info("FtdSecurityConfiguration.SecurityFilterChain invoked.");
-        AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
         return http
+                // 添加自定义Filter: Token验证过滤器
+                .addFilterBefore(new FtdTokenAuthenticationFilter(redisTemplate), UsernamePasswordAuthenticationFilter.class)
                 // 添加自定义Filter: 用户名密码格式验证过滤器
                 .addFilterBefore(new FtdUsernamePasswordValidationFilter(), UsernamePasswordAuthenticationFilter.class)
-                // 添加自定义Filter: Token验证过滤器
-//                .addFilterAfter(new FtdTokenAuthenticationFilter(authenticationManager, redisTemplate), UsernamePasswordAuthenticationFilter.class)
                 // 访问权限设置
                 .authorizeRequests(auth -> {
                     auth.antMatchers("/login/**").permitAll();
@@ -86,7 +86,14 @@ public class FtdSecurityConfiguration {
                     login.successHandler(new LoginSuccessHandler(redisTemplate));
                     login.failureUrl("/login/toLogin");
                     login.failureHandler(new LoginFailureHandler());
-//                    login.defaultSuccessUrl("/index.html");
+//                    login.defaultSuccessUrl("/");
+                })
+                // 开启Remember me
+                .rememberMe(remember ->{
+                    remember.rememberMeParameter("rememberMe");
+                    remember.tokenValiditySeconds(120);
+                    remember.tokenRepository(persistentTokenRepository());
+                    remember.userDetailsService(userDetailsService);
                 })
                 // 未授权访问
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(new UnauthEntryPoint()))

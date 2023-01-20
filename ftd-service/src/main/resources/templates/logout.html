@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.101.0">
+    <title>FtdBoot Security Sign Out</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/plugins/bootstrap4.6.0/bootstrap.min.css}"/>
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/signin.css}" rel="stylesheet">
+    <!--Favicon-->
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body class="text-center">
+    <form class="form-signin" th:action="@{/logout}" method="post">
+      <img class="mb-4" th:src="@{/favicon.ico}" alt="" width="72" height="72">
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Logout</button>
+      <a class="btn btn-lg btn-default btn-block" th:href="@{/index.html}">Cancel</a>
+      <p class="mt-5 mb-3 text-muted">&copy; 2017-2022</p>
+    </form>
+  </body>
+</html>

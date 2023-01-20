@@ -1,8 +1,10 @@
 package com.ftd.seckill.security.handler;
 
-import ch.qos.logback.core.util.TimeUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ftd.seckill.base.utils.TokenUtil;
 import com.ftd.seckill.security.entity.SecurityUserDetails;
+import com.ftd.seckill.security.utils.CookieUtil;
+import com.ftd.seckill.security.utils.FtdSecurityResponseUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -11,9 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Time;
-import java.time.LocalTime;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -31,12 +30,21 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // 获得认证成功的用户信息
         SecurityUserDetails userDetails = (SecurityUserDetails)authentication.getPrincipal();
-        // 根据用户名生成token
+        // 根据用户代码生成token
         String token = TokenUtil.createToken(userDetails.getCurrentUserInfo().getUserCode());
-        // 把用户名和用户信息放到redis
-        redisTemplate.opsForValue().set(userDetails.getCurrentUserInfo().getUserCode(), userDetails.getPermissionValueList());
+        //Creating the ObjectMapper object
+        ObjectMapper mapper = new ObjectMapper();
+        //Converting the Object to JSONString
+        String jsonString = mapper.writeValueAsString(userDetails.getPermissionValueList());
+        // 把用户代码和用户信息放到redis
+        redisTemplate.opsForHash().put(userDetails.getCurrentUserInfo().getUserCode(), "userEmail", userDetails.getCurrentUserInfo().getUserEmail());
+        redisTemplate.opsForHash().put(userDetails.getCurrentUserInfo().getUserCode(), "password", userDetails.getCurrentUserInfo().getUserPassword());
+        redisTemplate.opsForHash().put(userDetails.getCurrentUserInfo().getUserCode(), "permissions", jsonString);
         redisTemplate.expire(userDetails.getCurrentUserInfo().getUserCode(), TokenUtil.TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
+        // 把token放到cookie
+        CookieUtil.setCookie(request, response, "user_ticket", token);
+
         // 设置response message
-        FtdSecurityResponseHandler.formatServletResponse(response, null);
+        FtdSecurityResponseUtil.formatServletResponse(response, null);
     }
 }
