@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ftd.seckill.base.utils.TokenUtil;
 import com.ftd.seckill.base.vo.ResponseBeanEnum;
 import com.ftd.seckill.security.entity.SecurityUserDetails;
+import com.ftd.seckill.security.entity.User;
 import com.ftd.seckill.security.utils.CookieUtil;
 import com.ftd.seckill.security.utils.FtdSecurityResponseUtil;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -24,6 +25,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -44,7 +46,6 @@ public class FtdTokenAuthenticationFilter extends GenericFilterBean {
             throws IOException, ServletException {
         // 获取当前认证成功的用户权限信息
         UsernamePasswordAuthenticationToken authRequest = getAuthentication(request);
-        log.info("=============xxxxx " + authRequest);
         // 判断如果有权限信息，则放入Context
         if (authRequest != null){
             SecurityContextHolder.getContext().setAuthentication(authRequest);
@@ -70,11 +71,26 @@ public class FtdTokenAuthenticationFilter extends GenericFilterBean {
 
             // 从Redis中获取权限列表
             String userEmail = (String)redisTemplate.opsForHash().get(userCode, "userEmail");
-            String jsonString = (String)redisTemplate.opsForHash().get(userCode, "permissions");
             // Redis数据丢失
-            if (!StringUtils.hasText(userEmail) || !StringUtils.hasText(jsonString))
+            if (!StringUtils.hasText(userEmail))
                 return null;
 
+            User user = new User(
+                    null,
+                    userCode,
+                    userEmail,
+                    (String)redisTemplate.opsForHash().get(userCode, "useName"),
+                    (String)redisTemplate.opsForHash().get(userCode, "password"),
+                    null,
+                    null,
+                    null,
+                    null,
+                    (long)redisTemplate.opsForHash().get(userCode, "userMobile")
+            );
+            // 创建UserDetails
+            SecurityUserDetails securityUserDetails = new SecurityUserDetails(user);
+
+            String jsonString = (String)redisTemplate.opsForHash().get(userCode, "permissions");
             try {
                 //Creating the ObjectMapper object
                 ObjectMapper mapper = new ObjectMapper();
@@ -85,7 +101,7 @@ public class FtdTokenAuthenticationFilter extends GenericFilterBean {
             } catch (JsonProcessingException e) {
                 return null;
             }
-            return new UsernamePasswordAuthenticationToken(userEmail, token, authorities);
+            return new UsernamePasswordAuthenticationToken(securityUserDetails, token, authorities);
         }
         return null;
     }

@@ -2,10 +2,7 @@ package com.ftd.seckill.security.config;
 
 import com.ftd.seckill.security.filter.FtdTokenAuthenticationFilter;
 import com.ftd.seckill.security.filter.FtdUsernamePasswordValidationFilter;
-import com.ftd.seckill.security.handler.FtdPasswordEncoder;
-import com.ftd.seckill.security.handler.LoginFailureHandler;
-import com.ftd.seckill.security.handler.LoginSuccessHandler;
-import com.ftd.seckill.security.handler.UnauthEntryPoint;
+import com.ftd.seckill.security.handler.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -74,6 +71,7 @@ public class FtdSecurityConfiguration {
                 .addFilterBefore(new FtdUsernamePasswordValidationFilter(), UsernamePasswordAuthenticationFilter.class)
                 // 访问权限设置
                 .authorizeRequests(auth -> {
+                    auth.antMatchers("/").permitAll();
                     auth.antMatchers("/login/**").permitAll();
                     auth.antMatchers("/demo/**").authenticated();
 //                    auth.anyRequest().authenticated();
@@ -86,7 +84,15 @@ public class FtdSecurityConfiguration {
                     login.successHandler(new LoginSuccessHandler(redisTemplate));
                     login.failureUrl("/login/toLogin");
                     login.failureHandler(new LoginFailureHandler());
-//                    login.defaultSuccessUrl("/");
+                    login.defaultSuccessUrl("/");
+                })
+                // 开启logout
+                .logout(logout -> {
+                    logout.logoutUrl("/login/logout");
+                    logout.addLogoutHandler(new FtdLogoutHandler(redisTemplate));
+                    logout.deleteCookies("JSESSIONID");
+                    logout.deleteCookies("user_ticket");
+                    logout.logoutSuccessUrl("/");
                 })
                 // 开启Remember me
                 .rememberMe(remember ->{

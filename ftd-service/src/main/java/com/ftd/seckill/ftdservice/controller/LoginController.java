@@ -7,20 +7,39 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/login")
 @Slf4j
 public class LoginController {
     @Autowired
     private UserService userService;
 
     /**
+     * 跳转主页面
+     * @return
+     */
+    @RequestMapping("/index")
+    public String index(){
+        log.info("LoginController.index invoked.");
+        return "index";
+    }
+
+    /**
      * 跳转登录页面
      * @return
      */
-    @RequestMapping("/toLogin")
+    @RequestMapping("/login/toLogin")
     public String toLogin(){
         log.info("LoginController.toLogin invoked.");
         return "login";
+    }
+
+    /**
+     * 跳转登出页面
+     * @return
+     */
+    @RequestMapping("/login/toLogout")
+    public String toLogout(){
+        log.info("LoginController.toLogout invoked.");
+        return "logout";
     }
 
 }

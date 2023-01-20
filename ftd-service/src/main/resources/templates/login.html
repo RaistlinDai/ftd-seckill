@@ -95,8 +95,10 @@
             },
             success: function(data){
                 layer.closeAll();
-                if(data.code==200)
+                if(data.code==200) {
                     layer.msg("Success");
+                    setTimeout(1500);
+                }
                 else
                     layer.msg(data.message);
             },

@@ -37,8 +37,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         //Converting the Object to JSONString
         String jsonString = mapper.writeValueAsString(userDetails.getPermissionValueList());
         // 把用户代码和用户信息放到redis
+        redisTemplate.opsForHash().put(userDetails.getCurrentUserInfo().getUserCode(), "useName", userDetails.getCurrentUserInfo().getUserName());
         redisTemplate.opsForHash().put(userDetails.getCurrentUserInfo().getUserCode(), "userEmail", userDetails.getCurrentUserInfo().getUserEmail());
         redisTemplate.opsForHash().put(userDetails.getCurrentUserInfo().getUserCode(), "password", userDetails.getCurrentUserInfo().getUserPassword());
+        redisTemplate.opsForHash().put(userDetails.getCurrentUserInfo().getUserCode(), "userMobile", userDetails.getCurrentUserInfo().getUserMobile());
         redisTemplate.opsForHash().put(userDetails.getCurrentUserInfo().getUserCode(), "permissions", jsonString);
         redisTemplate.expire(userDetails.getCurrentUserInfo().getUserCode(), TokenUtil.TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
         // 把token放到cookie
