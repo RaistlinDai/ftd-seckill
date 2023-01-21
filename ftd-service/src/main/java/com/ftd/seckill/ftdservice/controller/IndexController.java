@@ -5,17 +5,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/demo")
-public class DemoController {
+public class IndexController {
 
     /**
      * 测试页面跳转
      * @param model
      * @return
      */
-    @RequestMapping("/hello")
+    @RequestMapping("/demo/hello")
     public String hello(Model model){
         model.addAttribute("name", "say hi");
         return "hello";
+    }
+
+    @RequestMapping("/index")
+    public String index(){
+        return "index";
     }
 }

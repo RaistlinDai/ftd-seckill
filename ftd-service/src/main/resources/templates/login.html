@@ -17,6 +17,8 @@
     <script type="text/javascript" th:src="@{/plugins/md5/md5.min.js}"></script>
     <!-- Custom js Common -->
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
+    <!-- Script js -->
+    <script type="text/javascript" th:src="@{/js/script.js}"></script>
     <!-- Custom styles for this template -->
     <link th:href="@{/css/signin.css}" rel="stylesheet">
     <!--Favicon-->
@@ -57,11 +59,14 @@
       </div>
 
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
+          <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="login()">Login</button>
+        </div>
+        <div class="col-md-4">
           <button class="btn btn-lg btn-primary btn-block" type="reset" onclick="reset()">Reset</button>
         </div>
-        <div class="col-md-6">
-          <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="login()">Login</button>
+        <div class="col-md-4">
+          <a class="btn btn-lg btn-primary btn-block" th:href="@{/index.html}">Cancel</a>
         </div>
       </div>
       <p class="mt-5 mb-3 text-muted">&copy; 2017-2022</p>
@@ -87,7 +92,7 @@
       const rememberMe = $("#rememberMe").prop('checked');
 
       $.ajax({
-        url: "/login/doLogin",
+        url: "/admin/doLogin",
         type: "POST",
         data: {
           userEmail: $("#userEmail").val(),
@@ -98,6 +103,10 @@
           layer.closeAll();
           if(data.code==200) {
             layer.msg("Success");
+
+            setTimeout(function (){
+              window.location.href = encodeURI("/index");
+            }, 1000);
           }
           else
             layer.msg(data.message);

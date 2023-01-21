@@ -6,7 +6,7 @@ public class MD5UtilTest {
 
     @Test
     public void inputPasswordToDatabasePasswordTest(){
-        String p1 = MD5Util.inputPasswordToBackPassword("666666");
+        String p1 = MD5Util.inputPasswordToBackPassword("123456");
         String p2 = MD5Util.backPasswordToDatabasePassword(p1);
 
         System.out.println(p1);

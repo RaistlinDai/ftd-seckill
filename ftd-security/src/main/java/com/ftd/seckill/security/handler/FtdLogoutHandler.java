@@ -2,7 +2,6 @@ package com.ftd.seckill.security.handler;
 
 import com.ftd.seckill.base.utils.TokenUtil;
 import com.ftd.seckill.security.utils.CookieUtil;
-import com.ftd.seckill.security.utils.FtdSecurityResponseUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,7 +34,5 @@ public class FtdLogoutHandler implements LogoutHandler {
                     redisTemplate.delete(userCode);
             }
         }
-        // 设置response message
-        FtdSecurityResponseUtil.formatServletResponse(response, null);
     }
 }

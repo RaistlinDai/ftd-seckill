@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,6 +24,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 @Slf4j
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class FtdSecurityConfiguration {
     @Autowired
     private UserDetailsService userDetailsService;
@@ -72,29 +74,28 @@ public class FtdSecurityConfiguration {
                 // 访问权限设置
                 .authorizeRequests(auth -> {
                     auth.antMatchers("/").permitAll();
-                    auth.antMatchers("/login/**").permitAll();
+                    auth.antMatchers("/index.html").permitAll();
                     auth.antMatchers("/demo/**").authenticated();
 //                    auth.anyRequest().authenticated();
                 })
                 // 开启login
                 .formLogin(login ->{
-                    login.loginPage("/login/toLogin");
+                    login.loginPage("/admin/toLogin");
                     login.usernameParameter("userEmail");
-                    login.loginProcessingUrl("/login/doLogin");
-                    login.failureUrl("/login/toLogin");
-//                    login.defaultSuccessUrl("/");
+                    login.loginProcessingUrl("/admin/doLogin");
+                    login.failureUrl("/admin/toLogin");
                     login.successHandler(new LoginSuccessHandler(redisTemplate));
                     login.failureHandler(new LoginFailureHandler());
                 })
                 // 开启logout
                 .logout(logout -> {
-                    logout.logoutUrl("/login/logout");
+                    logout.logoutUrl("/admin/doLogout");
+                    logout.invalidateHttpSession(true);
                     logout.deleteCookies("JSESSIONID", "user_ticket");
-//                    logout.logoutSuccessUrl("/");
                     // handler必须放在deleteCookies后面，否则失效
                     logout.addLogoutHandler(new FtdLogoutHandler(redisTemplate));
                 })
-                // 开启Remember me
+                // 开启RememberMe
                 .rememberMe(remember ->{
                     remember.rememberMeParameter("rememberMe");
                     remember.tokenValiditySeconds(120);
