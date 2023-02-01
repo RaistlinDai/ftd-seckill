@@ -2,7 +2,7 @@ package com.ftd.seckill.ftdservice.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.ftd.seckill.ftdservice.service.PermissionService;
+import com.ftd.seckill.ftdservice.service.IPermissionService;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -18,6 +18,6 @@ import org.springframework.stereotype.Controller;
 public class PermissionController {
 
     @Autowired
-    private PermissionService PermissionService;
+    private IPermissionService PermissionService;
 
 }

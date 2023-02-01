@@ -2,7 +2,7 @@ package com.ftd.seckill.ftdservice.service.impl;
 
 import com.ftd.seckill.ftdservice.entity.Goods;
 import com.ftd.seckill.ftdservice.mapper.GoodsMapper;
-import com.ftd.seckill.ftdservice.service.GoodsService;
+import com.ftd.seckill.ftdservice.service.IGoodsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @since 2023-02-01 04:37:45
  */
 @Service
-public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements GoodsService {
+public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements IGoodsService {
 
 
 }

@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author ftd
  * @since 2023-02-01 04:37:45
  */
-public interface SeckillOrdersService extends IService<SeckillOrders> {
+public interface ISeckillOrdersService extends IService<SeckillOrders> {
 
 }

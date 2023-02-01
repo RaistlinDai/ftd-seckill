@@ -1,8 +1,8 @@
 package com.ftd.seckill.ftdservice.security;
 
 import com.ftd.seckill.ftdservice.entity.User;
-import com.ftd.seckill.ftdservice.service.PermissionService;
-import com.ftd.seckill.ftdservice.service.UserService;
+import com.ftd.seckill.ftdservice.service.IPermissionService;
+import com.ftd.seckill.ftdservice.service.IUserService;
 import com.ftd.seckill.security.entity.SecurityUserDetails;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,9 @@ import java.util.List;
 @Service
 public class FtdUserDetailsService implements UserDetailsService {
     @Autowired
-    UserService userService;
+    IUserService userService;
     @Autowired
-    PermissionService permissionService;
+    IPermissionService permissionService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

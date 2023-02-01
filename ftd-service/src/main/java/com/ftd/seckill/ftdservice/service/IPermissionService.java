@@ -13,7 +13,7 @@ import java.util.List;
  * @author ftd
  * @since 2023-01-17 12:06:22
  */
-public interface PermissionService extends IService<Permission> {
+public interface IPermissionService extends IService<Permission> {
     public Permission getPermissionByName(String permissionName);
     public List<String> getPermissionValuesByUserId(String userId);
 }

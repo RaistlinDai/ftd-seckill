@@ -1,6 +1,6 @@
 package com.ftd.seckill.ftdservice.service;
 
-import com.ftd.seckill.ftdservice.entity.SeckillGoods;
+import com.ftd.seckill.ftdservice.entity.Goods;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author ftd
  * @since 2023-02-01 04:37:45
  */
-public interface SeckillGoodsService extends IService<SeckillGoods> {
+public interface IGoodsService extends IService<Goods> {
 
 }

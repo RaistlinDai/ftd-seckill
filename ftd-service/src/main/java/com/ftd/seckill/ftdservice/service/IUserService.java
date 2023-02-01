@@ -1,7 +1,5 @@
 package com.ftd.seckill.ftdservice.service;
 
-import com.ftd.seckill.base.vo.LoginVO;
-import com.ftd.seckill.base.vo.ResponseBean;
 import com.ftd.seckill.ftdservice.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,7 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author ftd
  * @since 2023-01-17 12:06:22
  */
-public interface UserService extends IService<User> {
+public interface IUserService extends IService<User> {
 
     User selectUserByEmail(String userEmail);
 

@@ -2,7 +2,7 @@ package com.ftd.seckill.ftdservice.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.ftd.seckill.ftdservice.service.SeckillOrdersService;
+import com.ftd.seckill.ftdservice.service.ISeckillOrdersService;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -18,6 +18,6 @@ import org.springframework.stereotype.Controller;
 public class SeckillOrdersController {
 
     @Autowired
-    private SeckillOrdersService SeckillOrdersService;
+    private ISeckillOrdersService SeckillOrdersService;
 
 }
