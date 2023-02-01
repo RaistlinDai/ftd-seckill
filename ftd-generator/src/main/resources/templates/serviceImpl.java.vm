@@ -3,7 +3,7 @@ package ${package.ServiceImpl};
 import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
 #if(${table.serviceInterface})
-import ${package.Service}.${table.serviceName};
+import ${package.Service}.I${table.serviceName};
 #end
 import ${superServiceImplClassPackage};
 import org.springframework.stereotype.Service;
