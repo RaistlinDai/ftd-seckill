@@ -2,6 +2,9 @@ package com.ftd.seckill.ftdservice.service;
 
 import com.ftd.seckill.ftdservice.entity.Goods;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ftd.seckill.ftdservice.vo.GoodsVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IGoodsService extends IService<Goods> {
 
+    /**
+     * 获取商品列表
+     * @return
+     */
+    List<GoodsVo> findGoodsVo();
 }
