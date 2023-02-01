@@ -4,6 +4,6 @@ import com.ftd.seckill.generator.MySqlTemplateGenerator;
 
 public class MyBatisPlusGeneratorRunner {
     public static void main(String[] args){
-        MySqlTemplateGenerator.generator("role,user,permission");
+        MySqlTemplateGenerator.generator("orders,seckill_orders,goods,seckill_goods");
     }
 }

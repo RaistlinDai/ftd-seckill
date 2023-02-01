@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -98,7 +96,7 @@ public class FtdSecurityConfiguration {
                 // 开启RememberMe
                 .rememberMe(remember ->{
                     remember.rememberMeParameter("rememberMe");
-                    remember.tokenValiditySeconds(120);
+                    remember.tokenValiditySeconds(7*24*60*60); //RememberMe token 过期时间为一周
                     remember.tokenRepository(persistentTokenRepository());
                     remember.userDetailsService(userDetailsService);
                 })

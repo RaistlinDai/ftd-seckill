@@ -40,14 +40,14 @@ public class MySqlTemplateGenerator {
                 .globalConfig(builder -> {
                     builder.author(DB_AUTHOR)    //作者
                             .commentDate("yyyy-MM-dd hh:mm:ss") //注释日期
-                            .outputDir(System.getProperty("user.dir") + "/src/main/java") // 输出目录
+                            .outputDir(System.getProperty("user.dir") + "temp/src/main/java") // 输出目录
                             .disableOpenDir() //禁止打开输出目录
                             ;
                 })
                 // 包配置
                 .packageConfig(config -> {
                     config.parent("com.ftd.seckill.ftdservice")
-                            .pathInfo(Collections.singletonMap(OutputFile.xml, System.getProperty("user.dir") + "/src/main/resources/mybatis-plus/mappers")); //设置mapperXml生成路径
+                            .pathInfo(Collections.singletonMap(OutputFile.xml, System.getProperty("user.dir") + "temp/src/main/resources/mybatis-plus/mappers")); //设置mapperXml生成路径
                 })
                 // 策略配置
                 .strategyConfig(builder -> {
