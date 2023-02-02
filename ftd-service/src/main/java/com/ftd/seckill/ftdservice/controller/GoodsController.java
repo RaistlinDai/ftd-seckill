@@ -25,14 +25,12 @@ public class GoodsController {
     /**
      * 跳转商品列表页
      * @param model
-     * @param user
      * @return
      */
     @RequestMapping("/toList")
-    public String toList(Model model, User user) {
-        model.addAttribute("user", user);
-        model.addAttribute("goodList", goodsService.findGoodsVo());
-        return "goodsList";
+    public String toList(Model model) {
+        model.addAttribute("goodsList", goodsService.findGoodsVo());
+        return "goods/goodsList";
     }
 
 }

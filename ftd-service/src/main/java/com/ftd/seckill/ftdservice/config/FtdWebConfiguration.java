@@ -32,7 +32,7 @@ public class FtdWebConfiguration {
              */
             @Override
             public void addResourceHandlers(ResourceHandlerRegistry registry){
-                registry.addResourceHandler("/**").addResourceLocations("classpath:/resources/");
+//                registry.addResourceHandler("/**").addResourceLocations("classpath:/resources/");
             }
         };
     }
