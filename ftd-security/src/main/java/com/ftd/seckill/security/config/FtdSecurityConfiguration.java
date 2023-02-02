@@ -74,6 +74,7 @@ public class FtdSecurityConfiguration {
                     auth.antMatchers("/").permitAll();
                     auth.antMatchers("/index.html").permitAll();
                     auth.antMatchers("/demo/**").authenticated();
+//                    auth.antMatchers("/goods/**").hasAuthority("superuser");
 //                    auth.anyRequest().authenticated();
                 })
                 // 开启login

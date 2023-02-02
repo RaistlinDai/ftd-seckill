@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <!-- ** Basic Page Needs ** -->
+    <meta charset="utf-8">
+    <title>Goods Details</title>
+    <!-- JQuery -->
+    <script th:src="@{/plugins/jquery3.2.1/jquery.min.js}"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/plugins/bootstrap4.6.0/bootstrap.min.css}"/>
+    <script th:src="@{/plugins/bootstrap4.6.0/bootstrap.min.js}"></script>
+    <!-- Layer -->
+    <script type="text/javascript" th:src="@{/plugins/layer3.1.1/layer.min.js}"></script>
+    <!-- Custom js Common -->
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+</head>
+<body>
+<div class="panel panel-default">
+   <div class="panel-heading">Second-Kill Goods Details</div>
+    <!--
+    <div class="panel-body">
+        <span th:if="${user eq null}}">Spring Security 验证未完成<br/></span>
+        <span>No Ship Address Suggestion...</span>
+    </div>
+    -->
+    <table class="table" id="goods">
+        <tr>
+            <td>Goods Name</td>
+            <td colspan="3" th:text="${goods.goodsName}"></td>
+        </tr>
+        <tr>
+            <td>Goods Picture</td>
+            <td colspan="3"><img th:src="@{${goods.goodsImp}}" width="200" height="200" /></td>
+        </tr>
+        <tr>
+            <td>Second-Kill Start Time</td>
+            <td th:text="${#dates.format(goods.startDate, 'yyyy/MM/dd HH:mm:ss')}"></td>
+            <td id="seckillTip">
+                <input type="hidden" id="remainSecondsHide" th:value="${remainSeconds}"/>
+                <span th:if="${secSkillStatus == 0}" style="color:forestgreen">Second-Kill Countdown: <span id="countDown" th:text="${remainSeconds}"></span> s</span>
+                <span th:if="${secSkillStatus == 1}" style="color:red">Second-Kill Processing</span>
+                <span th:if="${secSkillStatus == 2}" style="color:dimgray">Second-Kill Closed</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Goods Original Price</td>
+            <td colspan="3" th:text="${goods.goodsPrice}"></td>
+        </tr>
+        <tr>
+            <td>Second-Kill Price</td>
+            <td colspan="3" th:text="${goods.seckillPrice}"></td>
+        </tr>
+        <tr>
+            <td>Stock Count</td>
+            <td colspan="3" th:text="${goods.stockCount}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+<script>
+    $(function (){
+        countDown();
+    });
+
+    function countDown() {
+        var remainSeconds = $("#remainSecondsHide").val();
+        var timeout;
+        // 秒杀未开始
+        if (remainSeconds > 0) {
+            timeout = setTimeout(() =>{
+                var sec = 0;
+                if (remainSeconds > 0)
+                    sec = remainSeconds - 1;
+                $("#countDown").text(sec);
+                $("#remainSecondsHide").val(sec);
+                countDown();
+            }, 1000);
+        }
+        // 秒杀进行中
+        else if (remainSeconds === 0){
+            if (timeout){
+                clearTimeout(timeout);
+            }
+            $("#seckillTip").html("Second-Kill Processing");
+        }
+        // 秒杀结束
+        // else{
+        //     $("#seckillTip").html("Second-Kill Closed");
+        // }
+    }
+
+
+</script>
+</html>

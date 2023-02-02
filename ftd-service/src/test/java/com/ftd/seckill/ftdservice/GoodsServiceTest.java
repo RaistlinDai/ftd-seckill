@@ -22,7 +22,14 @@ public class GoodsServiceTest {
         for (GoodsVo vo : vos){
             log.info("================> GoodsVo:" + vo.getGoodsName());
         }
+    }
 
+    @Test
+    public void findGoodsVoTestCase002(){
+        List<GoodsVo> vos = goodsService.findGoodsVoByGoodsId(new Long(1));
+        for (GoodsVo vo : vos){
+            log.info("================> GoodsVo:" + vo.getGoodsName());
+        }
     }
 
 

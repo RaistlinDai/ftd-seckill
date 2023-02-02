@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -26,10 +27,10 @@ public class GoodsVo extends Goods {
     /**
      * Second-Kill Start Time
      */
-    private LocalDateTime startDate;
+    private Date startDate;
 
     /**
      * Second-Kill End Time
      */
-    private LocalDateTime endDate;
+    private Date endDate;
 }

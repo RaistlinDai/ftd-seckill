@@ -39,7 +39,7 @@ spring:
 mybatis-plus:
   # Mapper.xml映射文件路径
   mapper-locations: classpath*:/mybatis-plus/mappers/*Mapper.xml
-  # MyBatis数返回类型别名
+  # MyBatis返回类型别名
   type-aliases-package: com.ftd.seckill.entity
 
 logging:

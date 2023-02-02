@@ -35,4 +35,23 @@
                 LEFT JOIN seckill_goods AS sg ON g.id = sg.good_id
     </select>
 
+    <select id="findGoodsVoByGoodsId" resultType="com.ftd.seckill.ftdservice.vo.GoodsVo">
+        SELECT
+            g.id,
+            g.goods_name,
+            g.goods_imp,
+            g.goods_detail,
+            g.goods_price,
+            g.goods_stock,
+            sg.seckill_price,
+            sg.stock_count,
+            sg.start_date,
+            sg.end_date
+        FROM
+            goods g
+                LEFT JOIN seckill_goods AS sg ON g.id = sg.good_id
+        WHERE
+            g.id = #{goodsId}
+    </select>
+
 </mapper>
